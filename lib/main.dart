@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:space_hero/game_core/game.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,11 +9,6 @@ void main() {
       .whenComplete(() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.bottom]);
-    runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Center(
-        child: Text('Game'),
-      ),
-    ));
+    runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Game()));
   });
 }

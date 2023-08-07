@@ -1,6 +1,8 @@
+import 'dart:isolate';
+
 bool _ranning = true;
 
-void startLoop() {
+void mainLoop(SendPort sendPort) async {
   final double _fps = 50;
   final double _second = 1000;
   final double _updateTime = _second / _fps;
@@ -16,6 +18,7 @@ void startLoop() {
     if (_loopWatch.elapsedMilliseconds >= _updateTime) {
       _updates++;
       _loopWatch.reset();
+      sendPort.send(true);
     }
     if (_timerWatch.elapsedMicroseconds > _second) {
       print('${DateTime.now()} FPS: $_updates');

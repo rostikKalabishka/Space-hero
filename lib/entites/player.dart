@@ -18,6 +18,10 @@ class Player extends Entity {
 
   double _speed = 3;
 
+  bool isAcceleration = false;
+
+  get getAngle => _angle;
+
   @override
   Widget build() {
     return Positioned(
@@ -33,6 +37,7 @@ class Player extends Entity {
 
   @override
   void move() {
+    if (!isAcceleration) return;
     if (isMoveLeft) _degree -= 5;
     if (isMoveRight) _degree += 5;
     _angle = (_degree * 3.14) / 180;

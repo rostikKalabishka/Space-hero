@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 abstract class Entity {
-  late double x;
-  late double y;
+  double x = 0;
+  double y = 0;
   String spritename;
   bool visible = true;
   List sprites = [];

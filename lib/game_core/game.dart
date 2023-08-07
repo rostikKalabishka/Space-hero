@@ -15,9 +15,6 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  double x = 150;
-  double y = 200;
-
   final ReceivePort _receivePort = ReceivePort();
   late final Isolate _isolateLoop;
 

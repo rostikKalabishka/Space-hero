@@ -74,12 +74,12 @@ class GameScene extends AppScene {
     });
   }
 
+  GameScene();
+
   void _onPanStart(DragStartDetails details) {
     _startGlobalPosition = details.globalPosition.dx;
     print(_startGlobalPosition);
   }
-
-  GameScene();
 
   void _onPanUpdate(DragUpdateDetails details) {
     double updateGlobalPostion = details.globalPosition.dx;

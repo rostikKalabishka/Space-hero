@@ -30,7 +30,7 @@ class Player extends Entity {
         child: visible
             ? Transform.rotate(
                 angle: _angle,
-                child: sprites.first,
+                child: sprites[currentSprite],
               )
             : SizedBox());
   }
@@ -60,10 +60,5 @@ class Player extends Entity {
 
     isMoveLeft = false;
     isMoveRight = false;
-  }
-
-  @override
-  void update() {
-    move();
   }
 }

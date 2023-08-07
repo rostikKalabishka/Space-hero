@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:flutter/material.dart';
+import 'package:space_hero/entites/player.dart';
 import 'package:space_hero/game_core/main_loop.dart';
 
 import '../utilits/common_vars.dart';
@@ -17,7 +18,10 @@ class _GameState extends State<Game> {
   double y = 200;
 
   late ReceivePort _receivePort;
-  Isolate? _isolateLoop;
+  late Isolate _isolateLoop;
+
+  late Player player;
+
   void startIsolateLoop() async {
     _receivePort = ReceivePort();
     _isolateLoop = await Isolate.spawn(mainLoop, _receivePort.sendPort);
@@ -36,10 +40,12 @@ class _GameState extends State<Game> {
     if (isFirstStartGame) {
       startIsolateLoop();
       isFirstStartGame = false;
+      player = Player();
     }
+    player.update();
     return Stack(
       children: [
-        Positioned(top: y, left: x, child: Text('Data2')),
+        player.build(),
       ],
     );
   }

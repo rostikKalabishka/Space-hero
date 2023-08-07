@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:space_hero/entites/player.dart';
 import 'package:space_hero/game_core/main_loop.dart';
+import 'package:space_hero/utilits/global_vars.dart';
 
 import '../utilits/common_vars.dart';
 
@@ -20,33 +21,32 @@ class _GameState extends State<Game> {
   late ReceivePort _receivePort;
   late Isolate _isolateLoop;
 
-  late Player player;
-
-  void startIsolateLoop() async {
+  void _startIsolateLoop() async {
     _receivePort = ReceivePort();
     _isolateLoop = await Isolate.spawn(mainLoop, _receivePort.sendPort);
     _receivePort.listen((message) {
       setState(() {
-        x++;
-        if (x > 600) {
-          x = 0;
-        }
+        GlobalVars.currentScene.update();
       });
     });
   }
 
   @override
+  void initState() {
+    _startIsolateLoop();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _receivePort.close();
+    _isolateLoop.kill();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isFirstStartGame) {
-      startIsolateLoop();
-      isFirstStartGame = false;
-      player = Player();
-    }
-    player.update();
-    return Stack(
-      children: [
-        player.build(),
-      ],
-    );
+    return GlobalVars.currentScene.buildScene();
   }
 }
